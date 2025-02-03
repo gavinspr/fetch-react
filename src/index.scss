@@ -14,7 +14,7 @@ $button-bg-light: #f9f9f9;
 
   color-scheme: light dark;
   color: $text-dark;
-  background-color: $bg-dark;
+  background-color: $bg-light;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -63,20 +63,5 @@ button {
   &:focus,
   &:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: $text-light;
-    background-color: $bg-light;
-  }
-
-  a:hover {
-    color: lighten($primary-color, 10%);
-  }
-
-  button {
-    background-color: $button-bg-light;
   }
 }
