@@ -1,8 +1,5 @@
-import React from "react"
-import styles from ".Search.module.scss"
+import styles from ".Search.module.scss";
 
-export const Search= () => {
-    return (
-        <></>
-    )
-}
+export const Search = () => {
+  return <></>;
+};

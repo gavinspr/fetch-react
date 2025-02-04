@@ -2,31 +2,39 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate
+  Navigate,
 } from "react-router-dom";
-import './App.scss'
-import { Login, Match, Search } from "./components/pages"
+import "./App.scss";
+import { Login, Match, Search } from "./components/pages";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import { ToastContainer } from "react-toastify";
+import Layout from "./components/Layout/Layout";
+import { AuthProvider } from "./contexts";
 
 const App = () => {
-
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoutes>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/" element={<Navigate to="/search" replace />} />
               <Route path="/search" element={<Search />} />
               <Route path="/match" element={<Match />} />
-            </ProtectedRoutes>
-          }
-        />
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router >
-  )
-}
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
+        </Routes>
+      </Router>
+      <ToastContainer
+        position="bottom-right"
+        theme="colored"
+        hideProgressBar
+        autoClose={2000}
+      />
+    </AuthProvider>
+  );
+};
 
-export default App
+export default App;
