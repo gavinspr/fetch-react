@@ -1,0 +1,61 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.loginContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 75vh;
+}
+
+.loginForm {
+  background: $bg-primary;
+  padding: 3rem;
+  border-radius: 8px;
+  width: 300px;
+
+  h2 {
+    text-align: center;
+    color: $text-primary;
+    margin: 0.5rem;
+  }
+
+  .formGroup {
+    margin-bottom: 1rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-sizing: border-box;
+
+      &.error {
+        outline: 1px solid $error;
+      }
+    }
+  }
+
+  .formGroup:first-of-type input {
+    margin-bottom: 0.5rem;
+  }
+
+  .error {
+    color: $error;
+    padding: 0.25rem;
+    border-radius: 4px;
+  }
+
+  button {
+    @include button;
+    margin-top: 2rem;
+    font-size: 1.5rem;
+  }
+}

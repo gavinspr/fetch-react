@@ -1,0 +1,16 @@
+@use "../../../styles/variables" as *;
+
+.container {
+  padding: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.noMatches {
+  text-align: center;
+  color: $primary-color;
+}

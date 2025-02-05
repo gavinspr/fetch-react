@@ -1,3 +1,3 @@
-export * from "./Login/Login"
+export * from "./LoginPage/LoginPage"
 export * from "./Match/Match"
-export * from "./Search/Search"
+export * from "./DogSearchPage/DogSearchPage"

@@ -1,0 +1,143 @@
+@use "../../styles/mixins" as *;
+@use "../../styles/variables" as *;
+
+.dropdown {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.multiSelect {
+  position: relative;
+  width: 100%;
+}
+
+.selectedContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 2px solid $border-color;
+  border-radius: 8px;
+  background: $bg-primary;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+
+  &:hover {
+    border-color: $hover-color;
+  }
+
+  &:focus-within {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  background: $accent-color;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  color: $text-primary;
+  animation: tagEnter 0.2s ease;
+
+  button {
+    margin-left: 0.5rem;
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: rgba(29, 78, 216, 0.2);
+    }
+  }
+}
+
+@keyframes tagEnter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 120px;
+  border: none;
+  outline: none;
+  padding: 0.25rem;
+  font-size: 0.9rem;
+  background: transparent;
+  cursor: pointer;
+
+  &::placeholder {
+    color: #6b7280;
+  }
+}
+
+.chevron {
+  @include chevron;
+}
+
+.options {
+  position: absolute;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 2px solid $border-color;
+  border-radius: 8px;
+  background: $bg-primary;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 0.5rem;
+  z-index: 3;
+}
+
+.option {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s ease;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: #f3f4f6;
+  }
+
+  &.selected {
+    background: $accent-color;
+    color: $text-primary;
+    font-weight: 500;
+  }
+}
+
+.checkmark {
+  color: $primary-color;
+  font-weight: bold;
+}
+
+.noResults {
+  padding: 1rem;
+  color: #6b7280;
+  text-align: center;
+  font-size: 0.9rem;
+}

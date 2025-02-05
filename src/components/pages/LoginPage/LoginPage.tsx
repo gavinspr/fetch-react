@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import styles from "./Login.module.scss";
+import styles from "./LoginPage.module.scss";
 import { apiRequest } from "../../../utils";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ type Errors = {
   email?: string;
 };
 
-export const Login = () => {
+export const LoginPage = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [errors, setErrors] = useState<Errors>({});
@@ -71,8 +71,6 @@ export const Login = () => {
       });
 
       if (!response.ok) {
-        toast.error("Login Failed!");
-
         const errorData = await response.json();
         throw new Error(errorData.message || "Login failed");
       }
@@ -82,6 +80,7 @@ export const Login = () => {
       navigate("/search");
     } catch (err: any) {
       console.log(err.message);
+      toast.error("Login Failed!");
     }
   };
 

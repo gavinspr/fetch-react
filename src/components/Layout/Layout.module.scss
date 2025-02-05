@@ -7,40 +7,40 @@
   min-width: 100vw;
   min-height: 100vh;
   background: radial-gradient(circle, #6a1b6a, #2f0c38);
+}
 
-  .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-  }
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
 
-  .navLeft {
-    a {
-      text-decoration: none;
-      font-size: 3rem;
-      font-weight: bold;
-    }
+.navLeft {
+  a {
+    text-decoration: none;
+    font-size: 3rem;
+    font-weight: bold;
   }
+}
 
-  .navRight {
-    display: flex;
-    align-items: center;
-  }
+.navRight {
+  display: flex;
+  align-items: center;
+}
 
-  .logoutButton {
-    @include button;
-  }
+.logoutButton {
+  @include button;
+}
 
-  .mainContent {
-    flex: 1;
-    padding: 2rem;
-  }
+.mainContent {
+  flex: 1;
+  padding: 2rem;
+}
 
-  .footer {
-    text-align: center;
-    padding-top: 0.5rem;
-    color: $primary-color;
-    font-size: 0.9rem;
-  }
+.footer {
+  text-align: center;
+  padding-top: 0.5rem;
+  color: $primary-color;
+  font-size: 0.9rem;
 }
