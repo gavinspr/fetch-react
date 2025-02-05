@@ -39,7 +39,10 @@ export const DogSearchPage = () => {
   const [dogs, setDogs] = useState<Array<Dog>>([]);
   const [total, setTotal] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [favorites, setFavorites] = useState<Array<Dog>>([]);
+  const [favorites, setFavorites] = useState<Array<Dog>>(() => {
+    const savedFavorites = localStorage.getItem("favorites");
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
   const [match, setMatch] = useState<Dog | undefined>(undefined);
 
   const isFirstRenderRef = useRef<boolean>(true);
@@ -147,15 +150,20 @@ export const DogSearchPage = () => {
     setCurrentPage(1);
   }, [selectedBreeds, zipCodes, ageMin, ageMax, pageSize, sortOrder]);
 
+  // Persist favorites in local storage
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
   const toggleSortOrder = () =>
     setSortOrder((prev: "asc" | "desc") => (prev === "asc" ? "desc" : "asc"));
 
   const toggleFavorite = (dog: Dog) => {
-    setFavorites((prev: Array<Dog>) =>
-      prev.includes(dog) ? prev.filter((d: Dog) => d !== dog) : [...prev, dog]
-    );
+    setFavorites((prev: Array<Dog>) => {
+      const exists: boolean = prev.some((d: Dog) => d.id === dog.id);
+      return exists ? prev.filter((d: Dog) => d.id !== dog.id) : [...prev, dog];
+    });
   };
-
   const handlePageChange = (newPage: number) => setCurrentPage(newPage);
 
   const handleClearFilters = () => {
