@@ -46,6 +46,16 @@ export const DogSearchPage = () => {
   const [match, setMatch] = useState<Dog | undefined>(undefined);
 
   const isFirstRenderRef = useRef<boolean>(true);
+  const initialFiltersRef = useRef<
+    Record<string, string | Array<string> | number>
+  >({
+    breeds: initialBreeds,
+    zipCodes: initialZipCodes,
+    ageMin: initialAgeMin,
+    ageMax: initialAgeMax,
+    pageSize: initialPageSize,
+    sortOrder: initialSortOrder,
+  });
 
   // Fetch dogs when filters change
   useEffect(() => {
@@ -145,9 +155,38 @@ export const DogSearchPage = () => {
   useEffect(() => {
     if (isFirstRenderRef.current) {
       isFirstRenderRef.current = false;
+      initialFiltersRef.current = {
+        breeds: selectedBreeds,
+        zipCodes: zipCodes,
+        ageMin: ageMin,
+        ageMax: ageMax,
+        pageSize: pageSize,
+        sortOrder: sortOrder,
+      };
       return;
     }
-    setCurrentPage(1);
+
+    const isFilterChanged: boolean =
+      JSON.stringify(selectedBreeds) !==
+        JSON.stringify(initialFiltersRef.current.breeds) ||
+      JSON.stringify(zipCodes) !==
+        JSON.stringify(initialFiltersRef.current.zipCodes) ||
+      ageMin !== initialFiltersRef.current.ageMin ||
+      ageMax !== initialFiltersRef.current.ageMax ||
+      pageSize !== initialFiltersRef.current.pageSize ||
+      sortOrder !== initialFiltersRef.current.sortOrder;
+
+    if (isFilterChanged) {
+      setCurrentPage(1);
+      initialFiltersRef.current = {
+        breeds: selectedBreeds,
+        zipCodes: zipCodes,
+        ageMin: ageMin,
+        ageMax: ageMax,
+        pageSize: pageSize,
+        sortOrder: sortOrder,
+      };
+    }
   }, [selectedBreeds, zipCodes, ageMin, ageMax, pageSize, sortOrder]);
 
   // Persist favorites in local storage
