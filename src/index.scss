@@ -48,13 +48,4 @@ button {
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
-
-  &:hover {
-    border-color: $primary-color;
-  }
-
-  &:focus,
-  &:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
-  }
 }

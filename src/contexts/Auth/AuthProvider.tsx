@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useEffect, useState } from "react";
+import { ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import AuthContext from "./AuthContext";
 import { AuthContextType } from "../../types";
 import { apiRequest } from "../../utils";
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }: PropTypes) => {
 
   const navigate = useNavigate();
 
-  const checkAuth = async () => {
+  const checkAuth = useCallback(async () => {
     try {
       const response = await apiRequest("/dogs/breeds");
       setIsAuthenticated(response.ok);
@@ -26,11 +26,12 @@ export const AuthProvider = ({ children }: PropTypes) => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [navigate]);
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [checkAuth]);
+
   return (
     <AuthContext.Provider
       value={{ isAuthenticated, setIsAuthenticated, checkAuth, isLoading }}

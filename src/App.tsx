@@ -5,7 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import "./App.scss";
-import { LoginPage, Match, DogSearchPage } from "./components/pages";
+import { LoginPage, DogSearchPage } from "./components/pages";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import { ToastContainer } from "react-toastify";
 import Layout from "./components/Layout/Layout";
@@ -20,7 +20,6 @@ const App = () => {
             <Route element={<ProtectedRoutes />}>
               <Route path="/" element={<Navigate to="/search" replace />} />
               <Route path="/search" element={<DogSearchPage />} />
-              <Route path="/match" element={<Match />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />

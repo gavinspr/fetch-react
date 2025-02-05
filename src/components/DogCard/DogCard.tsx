@@ -4,11 +4,12 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 
 type PropTypes = {
   dog: Dog;
-  isFavorite: boolean;
+  isFavorite?: boolean;
   toggleFavorite: (dog: Dog) => void;
+  isMatch?: boolean;
 };
 
-const DogCard = ({ dog, isFavorite, toggleFavorite }: PropTypes) => {
+const DogCard = ({ dog, isFavorite, toggleFavorite, isMatch }: PropTypes) => {
   return (
     <div className={styles.card}>
       <div
@@ -16,7 +17,7 @@ const DogCard = ({ dog, isFavorite, toggleFavorite }: PropTypes) => {
         onClick={() => toggleFavorite(dog)}
         title={isFavorite ? "Unfavorite" : "Favorite"}
       >
-        {isFavorite ? <FaStar /> : <FaRegStar />}
+        {!isMatch && isFavorite ? <FaStar /> : !isMatch ? <FaRegStar /> : null}
       </div>
       <img src={dog.img} alt={dog.name} className={styles.image} />
       <div className={styles.details}>

@@ -9,6 +9,8 @@ import Pagination from "../../Pagination/Pagination";
 import Favorites from "../../Favorites/Favorites";
 import { toast } from "react-toastify";
 import { useSearchParamsState } from "../../../hooks";
+import { FaLongArrowAltLeft } from "react-icons/fa";
+import { BeatLoader } from "react-spinners";
 
 export const DogSearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -36,13 +38,14 @@ export const DogSearchPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(initialPage);
   const [dogs, setDogs] = useState<Array<Dog>>([]);
   const [total, setTotal] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [favorites, setFavorites] = useState<Array<Dog>>([]);
+  const [match, setMatch] = useState<Dog | undefined>(undefined);
 
   // Fetch dogs when filters change
   useEffect(() => {
     const fetchDogs = async () => {
-      setLoading(true);
+      setIsLoading(true);
       try {
         const from: number = (currentPage - 1) * pageSize;
 
@@ -88,7 +91,7 @@ export const DogSearchPage = () => {
         console.error(err);
         toast.error(err.message);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
@@ -156,43 +159,74 @@ export const DogSearchPage = () => {
 
   return (
     <div className={styles.container}>
-      <Filters
-        selectedBreeds={selectedBreeds}
-        onBreedChange={setSelectedBreeds}
-        zipCodes={zipCodes}
-        onZipCodesChange={setZipCodes}
-        ageMin={ageMin}
-        onAgeMinChange={setAgeMin}
-        ageMax={ageMax}
-        onAgeMaxChange={setAgeMax}
-        pageSize={pageSize}
-        onPageSizeChange={setPageSize}
-        sortOrder={sortOrder}
-        toggleSortOrder={toggleSortOrder}
-        onClearFilters={handleClearFilters}
-      />
-      <div className={styles.grid}>
-        {dogs.map((dog: Dog) => (
-          <DogCard
-            key={dog.id}
-            dog={dog}
-            isFavorite={favorites.includes(dog)}
-            toggleFavorite={toggleFavorite}
+      {!match ? (
+        <>
+          <Filters
+            selectedBreeds={selectedBreeds}
+            onBreedChange={setSelectedBreeds}
+            zipCodes={zipCodes}
+            onZipCodesChange={setZipCodes}
+            ageMin={ageMin}
+            onAgeMinChange={setAgeMin}
+            ageMax={ageMax}
+            onAgeMaxChange={setAgeMax}
+            pageSize={pageSize}
+            onPageSizeChange={setPageSize}
+            sortOrder={sortOrder}
+            toggleSortOrder={toggleSortOrder}
+            onClearFilters={handleClearFilters}
           />
-        ))}
-      </div>
-      {!loading && dogs.length === 0 && (
-        <h2 className={styles.noMatches}>
-          No dogs found matching your criteria
-        </h2>
+          {dogs.length > 0 && (
+            <div className={styles.grid}>
+              {dogs.map((dog: Dog) => (
+                <DogCard
+                  key={dog.id}
+                  dog={dog}
+                  isFavorite={favorites.includes(dog)}
+                  toggleFavorite={toggleFavorite}
+                />
+              ))}
+            </div>
+          )}
+          {isLoading && (
+            <div className={styles.loader}>
+              <BeatLoader color="#f8a619" size={24} />
+            </div>
+          )}
+          {!isLoading && dogs.length === 0 && (
+            <h2 className={styles.noneFound}>
+              No dogs found matching your criteria
+            </h2>
+          )}
+          <Pagination
+            currentPage={currentPage}
+            total={total}
+            pageSize={pageSize}
+            onPageChange={handlePageChange}
+          />
+          <Favorites
+            favorites={favorites}
+            toggleFavorite={toggleFavorite}
+            setMatch={setMatch}
+          />
+        </>
+      ) : (
+        <div className={styles.match}>
+          <div className={styles.return} onClick={() => setMatch(undefined)}>
+            <FaLongArrowAltLeft />
+            <p>Return to search</p>
+          </div>
+          <h2>Meet Your Match!</h2>
+          <div className={styles.dog}>
+            <DogCard
+              key={`match-${match.id}`}
+              dog={match}
+              isMatch={true}
+              toggleFavorite={toggleFavorite}
+            />
+          </div>
+        </div>
       )}
-      <Pagination
-        currentPage={currentPage}
-        total={total}
-        pageSize={pageSize}
-        onPageChange={handlePageChange}
-      />
-      <Favorites favorites={favorites} toggleFavorite={toggleFavorite} />
     </div>
   );
 };

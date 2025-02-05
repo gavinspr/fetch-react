@@ -14,19 +14,19 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-}
 
-.navLeft {
-  a {
-    text-decoration: none;
-    font-size: 3rem;
-    font-weight: bold;
+  .navLeft {
+    a {
+      text-decoration: none;
+      font-size: 3rem;
+      font-weight: bold;
+    }
   }
-}
 
-.navRight {
-  display: flex;
-  align-items: center;
+  .navRight {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .logoutButton {
@@ -35,7 +35,7 @@
 
 .mainContent {
   flex: 1;
-  padding: 2rem;
+  padding: 0 2rem;
 }
 
 .footer {

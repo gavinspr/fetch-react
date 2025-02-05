@@ -2,6 +2,7 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import { apiRequest } from "../../utils";
 import styles from "./Layout.module.scss";
 import { useAuth } from "../../contexts";
+import { toast } from "react-toastify";
 
 const Layout = () => {
   const { isAuthenticated, setIsAuthenticated } = useAuth();
@@ -16,6 +17,7 @@ const Layout = () => {
       navigate("/login");
     } catch (err: any) {
       console.error("Error during logout:", err);
+      toast.error("Logout Failed!")
     }
   };
 

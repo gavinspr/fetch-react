@@ -8,9 +8,42 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1.5rem;
+  margin-top: 2rem;
 }
 
-.noMatches {
+.match {
+  .return {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: $primary-color;
+    background: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+  }
+
+  h2 {
+    color: $primary-color;
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  .dog {
+    width: 300px;
+    display: block;
+    margin: auto;
+  }
+}
+
+.noneFound {
   text-align: center;
   color: $primary-color;
+  padding: 1rem 0;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
 }
