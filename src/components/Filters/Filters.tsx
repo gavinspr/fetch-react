@@ -56,10 +56,28 @@ const Filters = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Sync local state with zipCodes prop
+  useEffect(() => {
+    setZipCodesString(zipCodes.join(", "));
+  }, [zipCodes]);
+
+  // Debounce zip code updates
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      const zipCodes: Array<string> = zipCodesString
+        .split(",")
+        .map((z: string) => z.trim())
+        .filter((z) => z !== "");
+      onZipCodesChange(zipCodes);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [zipCodesString, onZipCodesChange]);
+
   const handleZipCodesChange = (value: string) => {
     setZipCodesString(value);
-    const array: Array<string> = value.split(",").map((z: string) => z.trim());
-    onZipCodesChange(array);
   };
 
   return (
