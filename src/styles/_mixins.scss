@@ -32,3 +32,12 @@
     transform: translateY(-50%) rotate(180deg);
   }
 }
+
+@mixin input {
+  border-radius: 8px;
+  background: $bg-primary;
+  transition: all 0.2s ease;
+  border: 2px solid $border-color;
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+}

@@ -21,21 +21,16 @@
   }
 
   .formGroup {
-    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 
     label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
+      font-weight: 600;
     }
 
     input {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
-      box-sizing: border-box;
+      @include input;
 
       &.error {
         outline: 1px solid $error;
