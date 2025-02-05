@@ -193,7 +193,7 @@ export const DogSearchPage = () => {
                 <DogCard
                   key={dog.id}
                   dog={dog}
-                  isFavorite={favorites.includes(dog)}
+                  isFavorite={favorites.some((d: Dog) => d.id === dog.id)}
                   toggleFavorite={toggleFavorite}
                 />
               ))}
