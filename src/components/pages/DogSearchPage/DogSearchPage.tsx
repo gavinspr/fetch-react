@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styles from "./DogSearchPage.module.scss";
 import { Dog, SearchResultsType } from "../../../types";
@@ -41,6 +41,8 @@ export const DogSearchPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [favorites, setFavorites] = useState<Array<Dog>>([]);
   const [match, setMatch] = useState<Dog | undefined>(undefined);
+
+  const isFirstRenderRef = useRef<boolean>(true);
 
   // Fetch dogs when filters change
   useEffect(() => {
@@ -136,6 +138,15 @@ export const DogSearchPage = () => {
     setSearchParams,
   ]);
 
+  // Reset currentPage to 1 when filters change
+  useEffect(() => {
+    if (isFirstRenderRef.current) {
+      isFirstRenderRef.current = false;
+      return;
+    }
+    setCurrentPage(1);
+  }, [selectedBreeds, zipCodes, ageMin, ageMax, pageSize, sortOrder]);
+
   const toggleSortOrder = () =>
     setSortOrder((prev: "asc" | "desc") => (prev === "asc" ? "desc" : "asc"));
 
@@ -188,7 +199,7 @@ export const DogSearchPage = () => {
               ))}
             </div>
           )}
-          {isLoading && (
+          {isLoading && dogs.length === 0 && (
             <div className={styles.loader}>
               <BeatLoader color="#f8a619" size={24} />
             </div>
