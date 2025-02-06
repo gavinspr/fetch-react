@@ -34,6 +34,8 @@ export const LoginPage = () => {
 
     if (!email.trim()) {
       newErrors.email = "Please enter your email";
+    } else if (!/^\S+@\S+\.\S+$/.test(email.trim())) {
+      newErrors.email = "Please enter a valid email address";
     }
 
     setErrors(newErrors);
