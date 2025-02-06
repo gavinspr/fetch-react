@@ -11,7 +11,7 @@ Before you begin, ensure you have the following installed:
 
   ```
 
-## Install
+## Install & Run
 
 ```bash
 git clone https://github.com/gavinspr/fetch-react.git
@@ -27,4 +27,12 @@ pnpm install
 
 ```bash
 pnpm dev
+```
+
+## Build
+```bash
+pnpm build
+```
+```bash
+pnpm preview
 ```
