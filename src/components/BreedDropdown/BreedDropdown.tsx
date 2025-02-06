@@ -68,7 +68,7 @@ const BreedDropdown = ({ selectedBreeds, onSelect }: PropTypes) => {
       <div className={styles.multiSelect}>
         <div
           className={styles.selectedContainer}
-          onClick={() => setIsOpen(true)}
+          onClick={() => setIsOpen(!isOpen)}
         >
           {selectedBreeds.map((breed: string) => (
             <div key={breed} className={styles.tag}>
@@ -84,7 +84,7 @@ const BreedDropdown = ({ selectedBreeds, onSelect }: PropTypes) => {
             value={filter}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               setFilter(e.target.value);
-              setIsOpen(true);
+              setIsOpen(!isOpen);
             }}
             className={styles.searchInput}
           />

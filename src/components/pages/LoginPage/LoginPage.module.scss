@@ -10,9 +10,10 @@
 
 .loginForm {
   background: $bg-primary;
-  padding: 3rem;
   border-radius: 8px;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
+  padding: 2rem;
 
   h2 {
     text-align: center;

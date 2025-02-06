@@ -129,7 +129,7 @@ const Filters = ({
             />
           </div>
         </div>
-        <div className={styles.inputGroup}>
+        <div className={`${styles.inputGroup} ${styles.perPageGroup}`}>
           <label>Results Per Page</label>
           <div className={styles.pageSize} ref={perPageRef}>
             <div
@@ -164,7 +164,7 @@ const Filters = ({
             )}
           </div>
         </div>
-        <div className={styles.inputGroup}>
+        <div className={`${styles.inputGroup} ${styles.sortButtonGroup}`}>
           <label>Breed Sort Order</label>
           <button onClick={toggleSortOrder} className={styles.sortButton}>
             {sortOrder === "asc" ? "A → Z" : "Z → A"}
