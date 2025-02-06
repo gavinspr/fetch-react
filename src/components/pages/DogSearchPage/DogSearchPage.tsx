@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styles from "./DogSearchPage.module.scss";
-import { Dog, SearchResultsType } from "../../../types";
+import { Dog, SearchResultsType, User } from "../../../types";
 import { apiRequest } from "../../../utils";
 import Filters from "../../Filters/Filters";
 import DogCard from "../../DogCard/DogCard";
@@ -13,7 +13,18 @@ import { FaLongArrowAltLeft } from "react-icons/fa";
 import { BeatLoader } from "react-spinners";
 
 export const DogSearchPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  // Generate a key for favorites storage based on the authenticated user's email
+  // or use a default key if the user data isn't available
+  const storedUserData: string | null = localStorage.getItem("currentUser");
+  const authenticatedUser: User | null = storedUserData
+    ? JSON.parse(storedUserData)
+    : null;
+
+  const userKey: string = authenticatedUser?.email
+    ? `favorites_${authenticatedUser.email}`
+    : "favorites_default";
+
+  const [_, setSearchParams] = useSearchParams();
   const {
     initialBreeds,
     initialZipCodes,
@@ -40,7 +51,7 @@ export const DogSearchPage = () => {
   const [total, setTotal] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [favorites, setFavorites] = useState<Array<Dog>>(() => {
-    const savedFavorites = localStorage.getItem("favorites");
+    const savedFavorites: string | null = localStorage.getItem(userKey);
     return savedFavorites ? JSON.parse(savedFavorites) : [];
   });
   const [match, setMatch] = useState<Dog | undefined>(undefined);
@@ -107,7 +118,7 @@ export const DogSearchPage = () => {
         lastErrorRef.current = null;
       } catch (err: any) {
         console.error(err);
-        
+
         if (lastErrorRef.current !== err.message) {
           toast.error(err.message);
           lastErrorRef.current = err.message;
@@ -198,8 +209,8 @@ export const DogSearchPage = () => {
 
   // Persist favorites in local storage
   useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
+    localStorage.setItem(userKey, JSON.stringify(favorites));
+  }, [favorites, userKey]);
 
   const toggleSortOrder = () =>
     setSortOrder((prev: "asc" | "desc") => (prev === "asc" ? "desc" : "asc"));
@@ -210,6 +221,7 @@ export const DogSearchPage = () => {
       return exists ? prev.filter((d: Dog) => d.id !== dog.id) : [...prev, dog];
     });
   };
+
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
     window.scrollTo(0, 0);

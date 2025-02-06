@@ -4,6 +4,7 @@ import { apiRequest } from "../../../utils";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts";
+import { User } from "../../../types";
 
 type Errors = {
   name?: string;
@@ -74,6 +75,9 @@ export const LoginPage = () => {
         const errorData = await response.json();
         throw new Error(errorData.message || "Login failed");
       }
+
+      const user: User = { name, email };
+      localStorage.setItem("currentUser", JSON.stringify(user));
 
       toast.success("Login Successful!");
       setIsAuthenticated(true);
