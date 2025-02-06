@@ -274,7 +274,7 @@ export const DogSearchPage = () => {
             <FaLongArrowAltLeft />
             <p>Return to search</p>
           </div>
-          <h2>Meet Your Match!</h2>
+          <h2>Fetch Your New Best Friend!</h2>
           <div className={styles.dog}>
             <DogCard
               key={`match-${match.id}`}
