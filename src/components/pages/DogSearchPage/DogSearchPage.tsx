@@ -203,7 +203,10 @@ export const DogSearchPage = () => {
       return exists ? prev.filter((d: Dog) => d.id !== dog.id) : [...prev, dog];
     });
   };
-  const handlePageChange = (newPage: number) => setCurrentPage(newPage);
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    window.scrollTo(0, 0);
+  };
 
   const handleClearFilters = () => {
     setSelectedBreeds([]);
