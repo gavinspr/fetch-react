@@ -12,7 +12,7 @@ import { AuthProvider } from "./contexts";
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/fetch-react">
       <AuthProvider>
         <Routes>
           <Route element={<Layout />}>
