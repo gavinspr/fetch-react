@@ -56,6 +56,7 @@ export const DogSearchPage = () => {
     pageSize: initialPageSize,
     sortOrder: initialSortOrder,
   });
+  const lastErrorRef = useRef<string | null>(null);
 
   // Fetch dogs when filters change
   useEffect(() => {
@@ -102,9 +103,15 @@ export const DogSearchPage = () => {
         } else {
           setDogs([]);
         }
+
+        lastErrorRef.current = null;
       } catch (err: any) {
         console.error(err);
-        toast.error(err.message);
+        
+        if (lastErrorRef.current !== err.message) {
+          toast.error(err.message);
+          lastErrorRef.current = err.message;
+        }
       } finally {
         setIsLoading(false);
       }
